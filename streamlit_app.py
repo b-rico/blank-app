@@ -2,7 +2,6 @@
 import streamlit as st
 from snowflake.snowpark.functions import col
 import requests
-import pandas as pd
 
 # Write directly to the app
 st.title("Customize Your Smoothie :cup_with_straw:")
@@ -18,7 +17,7 @@ cnx = st.connection("snowflake")
 session = cnx.session()
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('fruit_name')),col('search_on')
 
-pd_df = pd.DataFrame(my_dataframe)
+pd_df = my_dataframe.to_pandas()
 
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients: '
